@@ -1,0 +1,218 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+  <head> 
+    <title>After School Lessons</title> 
+    <link rel="stylesheet" href="style.css">
+  </head>
+  
+  <body> 
+    <div id="app">
+
+      <header>
+        <h1>Lessons Available</h1>
+        <button @click="showCheckout" :disabled="!canShoppingCart(cart)">
+          Shopping Cart: {{ cartItemCount }}
+        </button>
+      </header>
+      
+      <div v-if="showLessons">
+
+        <div class="sort-bar">
+          <select name="sortBy" id="select" v-model="sortBy">
+            <option value="subject">Subject</option>
+            <option value="location">Location</option>
+            <option value="price">Price</option>
+            <option value="spaces">Spaces</option>
+          </select>
+
+          <button @click="ascending = !ascending" class="sort-button">
+            <i v-if="ascending">Ascending</i>
+            <i v-else>Descending</i>
+          </button>
+        </div>
+  
+        <div v-for="classes in filteredLessonsData" class="lesson-item">
+          <img v-bind:src="classes.icon" alt="Lesson Icon">
+          <div class="lesson-details">
+            <p>{{ classes.subject }} <br>
+              £{{ classes.price }} <br>
+              {{ classes.location }} <br>
+              Spaces left: {{ classes.spaces }} <br>
+              <button @click="addToCart(classes)" :disabled="!canAddToCart(classes)">
+                Add to Cart
+              </button>
+            </p>
+          </div>
+        </div>
+      </div>
+      
+                        <!-- CHECKOUT PAGE -->
+      <div v-else>
+
+        <div v-if="cart.length > 0">
+          <h1>Items in Cart</h1>
+          
+            <p v-for="item in cart">
+              {{ item.subject }} - £{{ item.price }}
+              <br>
+              <button @click="removeFromCart(item)">
+                Remove {{ item.subject }} From Cart ?
+              </button>
+            </p>
+          
+        </div>
+        <div v-else>
+          <p>Your cart is empty.</p>
+        </div>
+
+        <br>
+        <br>
+
+        <h1>Checkout</h1>
+
+        <p>
+          <strong>First Name:</strong> <br>
+          <input v-model.trim="order.firstName" @input="validateFirstName"/>
+        </p>
+
+        <p>
+          <strong>Last Name:</strong> <br>
+          <input v-model.trim="order.lastName" @input="validateLastName"/>
+        </p>
+
+        <p>
+          <strong>Phone Number:</strong> <br>
+          <input v-model.trim="order.phoneNumber" @input="validatePhoneNumber"/>
+        </p>
+
+        <br>
+
+        <button @click="submitForm">
+          Place your order {{ order.firstName }} ?
+        </button>
+
+    </div>
+
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script> 
+    <script type="module" src="/src/lessons.js"></script>
+    
+    <script type="module">
+    
+    import { lessonsData } from './src/lessons.js';
+    
+    const app = Vue.createApp({
+      data() {
+        return {
+          showLessons: true,
+          ascending: true,
+          sortBy: 'subject',
+          lessonsData,
+          cart: [],
+          order: {
+            firstName: '',
+            lastName: '',
+            phoneNumber: ''
+          },
+          sortCriteria: 'subject',
+          sortOrder: 'asc'
+        };
+      },
+      computed: {
+        filteredLessonsData() {
+          let tempLessons = this.lessonsData
+          tempLessons = tempLessons.sort((a, b) => {
+            if (this.sortBy == 'subject') {
+              let fa = a.subject.toLowerCase(), fb = b.subject.toLowerCase()
+              if (fa < fb) {
+                return -1
+              }
+              if (fa > fb) {
+                return 1
+              }
+              return 0
+            } else if (this.sortBy == 'location') {
+              let fa = a.location.toLowerCase(), fb = b.location.toLowerCase()
+              if (fa < fb) {
+                return -1
+              }
+              if (fa > fb) {
+                return 1
+              }
+              return 0
+            } else if (this.sortBy == 'price') {
+              return a.price - b.price
+            } else {
+              return a.spaces - b.spaces
+            }
+          })
+          if (!this.ascending) {
+            tempLessons.reverse()
+          }
+          return tempLessons
+        },
+        cartItemCount() {
+          return this.cart.length;
+        },
+        canAddToCart() {
+          return classes => classes.spaces > 0;
+        },
+        canShoppingCart() {
+          return cart => cart.length > 0;
+        },
+      },
+      methods: {
+        addToCart(lesson) {
+          const lessonToUpdate = this.lessonsData.find(l => l === lesson);
+          if (lessonToUpdate && this.canAddToCart) {
+            this.cart.push(lessonToUpdate);
+            lessonToUpdate.spaces--;
+          }
+        },
+        showCheckout() {
+          this.showLessons = this.showLessons ? false : true;
+        },
+        removeFromCart(item) {
+          const index = this.cart.indexOf(item);
+          if (index !== -1) {
+            const removedItem = this.cart.splice(index, 1)[0];
+            removedItem.spaces++;
+          }
+        },
+        validateFirstName() {
+          const validFirstName = /^[A-Za-z]+$/.test(this.order.firstName);
+          if (!validFirstName) {
+            alert('Please enter only letters for first name.');
+            this.order.firstName = '';
+          }
+        },
+        validateLastName() {
+          const validLastName = /^[A-Za-z]+$/.test(this.order.lastName);
+          if (!validLastName) {
+            alert('Please enter only letters for the Last Name.');
+            this.order.lastName = '';
+          }
+        },
+        validatePhoneNumber() {
+          const validPhoneNumber = /^[0-9]+$/.test(this.order.phoneNumber);
+          if (!validPhoneNumber) {
+            alert('Please enter only numbers for phone number.');
+            this.order.phoneNumber = '';
+          }
+        },
+        submitForm() {
+          if (!this.order.firstName.length || !this.order.lastName.length || 
+          !this.order.phoneNumber.length < 0) {
+            alert('Please fill in all fields')
+          } else {
+            alert('Order Submitted !')
+          }
+          
+        }
+      }
+    });
+    
+    app.mount('#app');
+    </script>
+  </body>
+</html> 

@@ -1,0 +1,44 @@
+#app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+header {
+  padding: 30px;
+  background-color: #ccc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  margin: 20px;
+  width: 80%; 
+}
+
+h1 {
+  margin: 0;
+}
+
+.cart-info {
+  margin: 10px;
+}
+
+.lesson-item {
+  width: 200px; 
+  margin-bottom: 20px; 
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+.lesson-details {
+  margin-top: 10px;
+}
+
+img {
+  width: 100px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
