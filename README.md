@@ -24,6 +24,6 @@ copy link to browser and site should appear
 
 ## Live
 
-Can access via git pages here: https://keisha127.github.io/CST3145-CW/
+Can access via git pages here: https://keisha127.github.io/CST3145_Front_End-CW/
 
 Link to repository: https://github.com/keisha127/CST3145-CW
