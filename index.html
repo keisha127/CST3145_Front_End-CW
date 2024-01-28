@@ -30,15 +30,16 @@
             <i v-else>Descending</i>
           </button>
         </div>
-  
-        <div v-for="classes in filteredLessonsData" class="lesson-item">
-          <img v-bind:src="classes.icon" alt="Lesson Icon">
+
+        <div v-for="lesson in lessonsData" :key="lesson._id" class="lesson-item">
+          <img v-bind:src="lesson.icon" alt="Lesson Icon">
           <div class="lesson-details">
-            <p>{{ classes.subject }} <br>
-              £{{ classes.price }} <br>
-              {{ classes.location }} <br>
-              Spaces left: {{ classes.spaces }} <br>
-              <button @click="addToCart(classes)" :disabled="!canAddToCart(classes)">
+            <p>
+              {{ lesson.subject }} <br>
+              £{{ lesson.price }} <br>
+              {{ lesson.location }} <br>
+              Spaces left: {{ lesson.spaces }} <br>
+              <button @click="addToCart(lesson)" :disabled="!canAddToCart(lesson)">
                 Add to Cart
               </button>
             </p>
@@ -102,7 +103,8 @@
     
     <script type="module">
     
-    import { lessonsData } from './src/lessons.js';
+    // import { lessonsData } from './src/lessons.js';
+    const API_URL = "http://localhost:3000/";
     
     const app = Vue.createApp({
       data() {
@@ -110,7 +112,8 @@
           showLessons: true,
           ascending: true,
           sortBy: 'subject',
-          lessonsData,
+          // lessonsData,
+          lessonsData: [],
           cart: [],
           order: {
             firstName: '',
@@ -121,6 +124,9 @@
           sortOrder: 'asc'
         };
       },
+      created() {
+          this.fetchLessonsData();
+        },
       computed: {
         filteredLessonsData() {
           let tempLessons = this.lessonsData
@@ -165,6 +171,14 @@
         },
       },
       methods: {
+        async fetchLessonsData() {
+          try {
+            const response = await fetch(API_URL + 'api/storeapp/getLessons');
+            this.lessonsData = await response.json();
+          } catch (error) {
+            console.error(error);
+          }
+        },
         addToCart(lesson) {
           const lessonToUpdate = this.lessonsData.find(l => l === lesson);
           if (lessonToUpdate && this.canAddToCart) {
@@ -203,15 +217,43 @@
             this.order.phoneNumber = '';
           }
         },
-        submitForm() {
-          if (!this.order.firstName.length || !this.order.lastName.length || 
-          !this.order.phoneNumber.length < 0) {
-            alert('Please fill in all fields')
-          } else {
-            alert('Order Submitted !')
+        async submitForm() {
+          try {
+            if (!this.order.firstName.length || !this.order.lastName.length || 
+            !this.order.phoneNumber.length < 0) {
+              alert('Please fill in all fields');
+              return;
+            } 
+            
+            this.order.cart = this.cart;
+
+            const response = await fetch(API_URL + 'api/storeapp/addOrder', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(this.order),
+            });
+            if (response.ok) {
+              alert('Order Submitted!');
+            } else { 
+              console.error('Failed to submit order');
+              alert('Order Failed. Please try again.');
+            }
+          } catch (error) {
+            console.error('Error in submitting order:', error);
+            alert('Error occured while submitting order. Please try again.');
           }
-          
         }
+        
+        // submitForm() {
+        //   if (!this.order.firstName.length || !this.order.lastName.length || 
+        //   !this.order.phoneNumber.length < 0) {
+        //     alert('Please fill in all fields')
+        //   } else {
+        //     alert('Order Submitted !')
+        //   }
+        // }
       }
     });
     
