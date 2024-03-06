@@ -1,3 +1,8 @@
+body {
+  background-color: #F5DBEC;
+  display: flex;
+}
+
 #app {
   display: flex;
   flex-direction: column;
@@ -6,13 +11,14 @@
 
 header {
   padding: 30px;
-  background-color: #ccc;
+  background-color: #B5769E;
   display: flex;
   justify-content: space-between;
   align-items: center;
   text-align: center;
   margin: 20px;
-  width: 80%; 
+  width: 90%; 
+  border-radius: 8px;
 }
 
 h1 {
@@ -23,12 +29,20 @@ h1 {
   margin: 10px;
 }
 
+.lesson-page{
+  display: ;
+}
+
 .lesson-item {
-  width: 200px; 
-  margin-bottom: 20px; 
+  width: 20%; 
+  margin: 20px; 
   border: 1px solid #ccc;
   padding: 10px;
   text-align: center;
+  background-color: #B5769E;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: inline-block;
 }
 
 .lesson-details {
@@ -40,5 +54,25 @@ img {
   height: auto;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #F5DBEC;
+  padding: 5px;
 }
 
+button {
+  background-color: #F5DBEC;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 5px;
+  margin: 5px;
+}
+
+.sort-button {
+  background-color: #B5769E;
+}
+
+select {
+  background-color: #F5DBEC;
+  border-radius: 6px;
+  padding: 5px;
+  margin: 4px;
+}

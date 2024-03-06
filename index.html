@@ -3,6 +3,8 @@
   <head> 
     <title>After School Lessons</title> 
     <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="webstore.webmanifest">
+    <!-- <link rel="shortcut icon" href="#" /> -->
   </head>
   
   <body> 
@@ -15,7 +17,7 @@
         </button>
       </header>
       
-      <div v-if="showLessons">
+      <div v-if="showLessons" class="lesson-page">
 
         <div class="sort-bar">
           <select name="sortBy" id="select" v-model="sortBy">
@@ -126,6 +128,9 @@
       },
       created() {
           this.fetchLessonsData();
+          if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("service-worker.js");
+          }
         },
       computed: {
         filteredLessonsData() {

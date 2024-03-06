@@ -1,0 +1,20 @@
+{
+    "name": "After School Lessons Store",
+    "short_name": "Lessons Store",
+    "description": "Online lesson store",
+    "icons": [
+        {
+            "src": "https://cdn-icons-png.flaticon.com/512/6395/6395603.png",
+            "sizes": "32x32",
+            "type": "image/png"
+        },
+        {
+            "src": "https://cdn-icons-png.flaticon.com/512/6395/6395603.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "start_url": "index.html",
+    "display": "fullscreen",
+    "background_color": "#F5DBEC"
+}
