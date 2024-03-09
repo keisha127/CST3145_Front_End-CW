@@ -4,14 +4,30 @@
     "description": "Online lesson store",
     "icons": [
         {
-            "src": "https://cdn-icons-png.flaticon.com/512/6395/6395603.png",
+            "src": "images/icon32.png",
             "sizes": "32x32",
             "type": "image/png"
         },
         {
-            "src": "https://cdn-icons-png.flaticon.com/512/6395/6395603.png",
+            "src": "images/icon.png",
             "sizes": "512x512",
             "type": "image/png"
+        }
+    ],
+    "screenshots": [
+        {
+         "src": "images/Screenshot.png",
+          "sizes": "640x320",
+          "type": "image/png",
+          "form_factor": "wide",
+          "label": "Wonder Widgets"
+        },
+        {
+            "src": "images/screenshotN.png",
+            "sizes": "1134x1526",
+            "type": "image/png",
+            "form_factor": "narrow",
+            "label":"Wonder Widgets"
         }
     ],
     "start_url": "index.html",

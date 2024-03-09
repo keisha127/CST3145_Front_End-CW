@@ -1,6 +1,8 @@
 var cacheName = "lessonstore-v1";
 var cacheFiles = [
-   "index.html"
+   "index.html",
+   "images/icon.png",
+   "images/icon32.png"
    //"lessons.js",
 ];
 

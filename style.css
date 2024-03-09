@@ -28,10 +28,10 @@ h1 {
 .cart-info {
   margin: 10px;
 }
-
+/* 
 .lesson-page{
-  display: ;
-}
+  display: flex;
+} */
 
 .lesson-item {
   width: 20%; 
