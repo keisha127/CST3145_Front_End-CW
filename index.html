@@ -3,11 +3,7 @@
   <head> 
     <title>After School Lessons</title> 
     <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="webstore.webmanifest">
-    <!-- <link rel="shortcut icon" href="images/favicon.ico"> -->
-    <!-- <link rel="icon" 
-      type="image/png" 
-      href="images/favicon_io/favicon.ico"> -->
+    <link rel="manifest" href="/CST3145_Front_End-CW/webstore.webmanifest">
       <link rel="icon" href="#" />
 
   </head>
@@ -133,8 +129,14 @@
       },
       created() {
           this.fetchLessonsData();
-          if ("serviceWorker" in navigator) {
-            navigator.serviceWorker.register("service-worker.js");
+          // if ("serviceWorker" in navigator) {
+          //   navigator.serviceWorker.register("service-worker.js");
+          // }
+          if (navigator.serviceWorker) {
+            navigator.serviceWorker.register (
+              '/CST3145_Front_End-CW/service-worker.js',
+              {scope: '/CST3145_Front_End-CW/'}
+            )
           }
         },
       computed: {

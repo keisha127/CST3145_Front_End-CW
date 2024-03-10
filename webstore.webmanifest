@@ -1,6 +1,7 @@
 {
     "name": "After School Lessons Store",
     "short_name": "Lessons Store",
+    "start_url": "index.html",
     "description": "Online lesson store",
     "icons": [
         {
@@ -30,7 +31,6 @@
             "label":"Wonder Widgets"
         }
     ],
-    "start_url": "index.html",
     "display": "fullscreen",
     "background_color": "#F5DBEC"
 }
